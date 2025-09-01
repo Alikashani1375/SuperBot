@@ -12,12 +12,10 @@ export function NavBar() {
   return (
     <nav className="w-full bg-[#111114] border-b border-gray-800">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/* Logo / Brand */}
         <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
           MyApp
         </div>
 
-        {/* Nav Items */}
         <div className="flex gap-6">
           {items.map((item, index) => (
             <Link

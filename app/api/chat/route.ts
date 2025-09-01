@@ -23,10 +23,15 @@ export async function POST(req: Request) {
     const reply = chatCompletion.choices[0].message.content;
 
     return NextResponse.json({ reply });
-  } catch (error: any) {
-    console.error("Hugging Face Router API Error:", error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Hugging Face Router API Error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    console.error("Unknown error:", error);
     return NextResponse.json(
-      { error: error.message || "خطا در دریافت پاسخ" },
+      { error: "خطای ناشناخته رخ داد" },
       { status: 500 }
     );
   }
