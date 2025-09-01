@@ -3,7 +3,7 @@ import { OpenAI } from "openai";
 
 const client = new OpenAI({
   baseURL: "https://router.huggingface.co/v1",
-  apiKey: "HF_TOKEN=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",
+  apiKey: process.env.HF_TOKEN,
 });
 
 export async function POST(req: Request) {
