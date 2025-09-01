@@ -21,7 +21,7 @@ export function NavBar() {
             <Link
               key={index}
               href={item.link}
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
+              className="py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
             >
               {item.name}
             </Link>
