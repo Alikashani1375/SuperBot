@@ -21,7 +21,7 @@ export default function RootLayout({
         </header>
         <main className="flex-1 container mx-auto px-6 py-6">{children}</main>
         <footer className="bg-[#111114] py-4 text-center text-xs text-gray-500 border-t border-gray-800">
-          © {new Date().getFullYear()} MyApp. All rights reserved.
+          © {new Date().getFullYear()} SuperBot. All rights reserved.
         </footer>
       </body>
     </html>
