@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 export default function Chat() {
   const [input, setInput] = useState("");
@@ -25,11 +25,8 @@ export default function Chat() {
         return;
       }
 
-      // اضافه کردن پیام کاربر
       setChatLog((prev) => [...prev, { user: input, bot: "" }]);
-
-      // شروع تایپ متن ربات
-      setTypingIndex(chatLog.length); // اندیس پیام جدید
+      setTypingIndex(chatLog.length);
       typeBotMessage(data.reply, chatLog.length);
 
       setInput("");
@@ -40,25 +37,24 @@ export default function Chat() {
     }
   }
 
-  // تابع نمایش حرف به حرف
   function typeBotMessage(message: string, index: number) {
     let i = 0;
     const interval = setInterval(() => {
-      setChatLog((prev) => {
-        const newLog = [...prev];
-        newLog[index] = {
-          ...newLog[index],
-          bot: (newLog[index]?.bot || "") + message[i],
-        };
-        return newLog;
-      });
-
-      i++;
-      if (i >= message.length) {
+      if (i <= message.length) {
+        setChatLog((prev) => {
+          const newLog = [...prev];
+          newLog[index] = {
+            ...newLog[index],
+            bot: message.substring(0, i),
+          };
+          return newLog;
+        });
+        i++;
+      } else {
         clearInterval(interval);
         setTypingIndex(null);
       }
-    }, 40); // سرعت تایپ (می‌تونی تغییر بدی)
+    }, 40);
   }
 
   return (
