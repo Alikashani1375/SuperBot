@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^3.0.2",
+    "idb": "^8.0.3",
     "next": "15.4.6",
     "openai": "^5.12.2",
     "react": "19.1.0",

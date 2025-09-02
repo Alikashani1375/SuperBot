@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
 import Link from "next/link";
+import { useAuth } from "@/app/hooks/useAuth";
 
 const items = [
   { name: "Home", link: "/" },
@@ -9,6 +11,8 @@ const items = [
 ];
 
 export function NavBar() {
+  const { logout } = useAuth();
+
   return (
     <nav className="w-full bg-[#111114] border-b border-gray-800">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
@@ -26,6 +30,12 @@ export function NavBar() {
               {item.name}
             </Link>
           ))}
+          <button
+            onClick={logout}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg cursor-pointer"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </nav>
