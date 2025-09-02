@@ -23,7 +23,7 @@ export default function LoginPage() {
   if (loading) return <p className="text-white">Loading...</p>;
 
   return (
-    <div className="flex flex-col  w-full max-w-2xl bg-[#0f0f12] border border-gray-800 p-6 rounded-lg shadow-2xl shadow-blue-500 mx-auto ">
+    <div className="flex flex-col  w-full max-w-2xl bg-[#0f0f12] border border-gray-800 p-6 rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-900 mx-auto ">
       <label className="text-gray-200 mb-2">Username</label>
       <input
         className="bg-gray-900 text-gray-200 px-3 py-2 mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"

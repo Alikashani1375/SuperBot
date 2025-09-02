@@ -60,7 +60,7 @@ export default function Chat() {
   }
 
   return (
-    <div className="flex flex-col h-[82vh] max-w-2xl mx-auto bg-[#0f0f12] border border-gray-800 rounded-2xl shadow-2xl shadow-blue-600">
+    <div className="flex flex-col h-[82vh] max-w-2xl mx-auto bg-[#0f0f12] border border-gray-800 rounded-2xl shadow-2xl shadow-blue-600 hover:shadow-blue-900">
       <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent my-5">
         {chatLog.map((msg, index) => (
           <div className="flex flex-col" key={index}>
