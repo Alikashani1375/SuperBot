@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { useAuth } from "@/app/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 const items = [
   { name: "Home", link: "/" },
@@ -25,7 +25,7 @@ export function NavBar() {
             <Link
               key={index}
               href={item.link}
-              className="py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
+              className="py-2 px-3 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
             >
               {item.name}
             </Link>

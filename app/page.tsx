@@ -1,9 +1,9 @@
 "use client";
 
-import Chat from "./components/chat/Chat";
+import Chat from "../components/chat/Chat";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useAuth } from "./hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Page() {
   const { token, loading } = useAuth();
@@ -11,7 +11,6 @@ export default function Page() {
 
   useEffect(() => {
     if (!loading && !token) {
-      // ریدایرکت به لاگین و پاس دادن backUrl
       router.push(
         `/login?backUrl=${encodeURIComponent(window.location.pathname)}`
       );

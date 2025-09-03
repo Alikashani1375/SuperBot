@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-import { NavBar } from "./components/Navbar/NavBar";
+import { NavBar } from "../components/Navbar/NavBar";
 
 export const metadata: Metadata = {
   title: "SuperBot",
