@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: var(--font-inter), sans-serif;
+  --background: #ffffff;
+  --foreground: #000000;
+  --primary: #d5d5db;
+  --secondary: #363636;
+  --destructive: #ff2321;
+  --bg: #ffffff;
+}
+
+.dark {
+  --background: #0a0a0ad8;
+  --foreground: #ededed;
+  --primary: #0f0f12;
+  --secondary: #8b8b8b;
+  --destructive: #8d1b19;
+  --bg: #1a1c1e;
+}
+.bg-pattern {
+  background: linear-gradient(
+      87.38deg,
+      rgba(131, 141, 157, 0.02) -0.41%,
+      rgba(23, 32, 44, 0) 50.29%,
+      rgba(91, 111, 137, 0.02) 104.39%
+    ),
+    linear-gradient(180deg, rgba(255, 199, 55, 0.022), rgba(255, 255, 255, 0)),
+    repeating-linear-gradient(
+      36deg,
+      rgba(23, 32, 44, 0),
+      rgba(255, 255, 255, 0.1) 0.2px,
+      transparent 0,
+      transparent 1px
+    );
+  box-shadow: inset 0 4.96113px 68.1311px 7.44169px rgba(30, 37, 47, 0.2);
+  --tw-backdrop-blur: blur(40px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+    var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+    var(--tw-backdrop-sepia);
+}
+
+.input {
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  font-family: var(--font-inter), sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  transition: background 0.3s ease, color 0.3s ease;
+}

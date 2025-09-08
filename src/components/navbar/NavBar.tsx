@@ -1,0 +1,107 @@
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import ThemeChangerBtn from "../utils/ThemeChangerBtn";
+import { useAuth } from "@/src/hooks/useAuth";
+import { Button } from "@/src/theme/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/src/theme/ui/sheet";
+import { Menu } from "lucide-react";
+import Image from "next/image";
+
+const items = [
+  { name: "Home", link: "/" },
+  { name: "Chat", link: "/chat" },
+  { name: "About", link: "/about" },
+  { name: "Sign In", link: "/signin" },
+];
+
+export function NavBar() {
+  const { logout } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <nav className="w-full border-b-[1px] border-[#feca477a] bg-[#1A1C1E]">
+      <div className="container mx-auto flex items-center justify-between py-4 px-6">
+        <div className="flex items-center gap-2">
+          <Image
+            src="/logo.svg"
+            alt="Logo"
+            width={128}
+            height={32}
+            className="w-32 mb-[2px]"
+          />
+          <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#FDE047] to-[#FDB447]">
+            Ai Assistant
+          </div>
+          <ThemeChangerBtn />
+        </div>
+
+        <div className="hidden md:flex gap-6">
+          {items.map((item, index) => (
+            <Link
+              key={index}
+              href={item.link}
+              className="py-2 px-3 rounded-md text-sm font-semibold text-white transition-colors duration-200 hover:bg-gray-700"
+            >
+              {item.name}
+            </Link>
+          ))}
+          <Button
+            className="bg-black text-white hover:bg-gray-800 !border-0"
+            onClick={logout}
+          >
+            Logout
+          </Button>
+        </div>
+
+        <div className="md:hidden">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                className="bg-transparent border-gray-600"
+              >
+                <Menu className="h-5 w-5 text-white" />
+                <span className="sr-only">باز کردن منو</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-[300px] sm:w-[400px] bg-[#1A1C1E] border-r border-[#feca477a]"
+            >
+              <div className="flex flex-col space-y-8 mt-10">
+                {items.map((item, index) => (
+                  <SheetClose asChild key={index}>
+                    <Link
+                      href={item.link}
+                      className="py-2 px-3 rounded-md text-lg font-semibold text-white transition-colors duration-200 hover:bg-gray-700"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  </SheetClose>
+                ))}
+                <SheetClose asChild>
+                  <Button
+                    className="bg-black text-white hover:bg-gray-800 !border-0 w-full justify-start text-lg py-2 px-3 h-auto"
+                    onClick={() => {
+                      logout();
+                      setIsOpen(false);
+                    }}
+                  >
+                    Logout
+                  </Button>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+    </nav>
+  );
+}
