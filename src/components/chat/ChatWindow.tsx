@@ -109,13 +109,13 @@ export default function ChatWindow() {
             <div className="flex flex-col" key={index}>
               {msg.sender === "user" ? (
                 <div className="flex justify-end">
-                  <div className="bg-gray-800 text-gray-200 rounded-br-none max-w-xs px-4 py-2 rounded-2xl lg:text-md">
+                  <div className="bg-gray-800 text-gray-200 rounded-br-none max-w-xs px-4 py-2 rounded-2xl lg:text-sm">
                     {msg.message}
                   </div>
                 </div>
               ) : (
                 <div className="flex justify-start">
-                  <div className="max-w-3xl px-4 py-2 rounded-2xl text-md bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-bl-none whitespace-pre-wrap">
+                  <div className="max-w-3xl px-4 py-2 rounded-2xl text-sm bg-[#EAF0F6] text-gray-500 rounded-bl-none whitespace-pre-wrap">
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={components}
@@ -130,7 +130,7 @@ export default function ChatWindow() {
 
           {typingText && (
             <div className="flex justify-start">
-              <div className="max-w-3xl px-4 py-2 rounded-2xl text-md bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-bl-none whitespace-pre-wrap">
+              <div className="max-w-3xl px-4 py-2 rounded-2xl text-md bg-[#EAF0F6] text-white rounded-bl-none whitespace-pre-wrap">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={components}
