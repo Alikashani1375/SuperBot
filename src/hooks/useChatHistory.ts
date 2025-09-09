@@ -47,6 +47,7 @@ export function useChatHistory(userId: string) {
   async function saveConversation(conv: Conversation) {
     const db = await getDB();
     await db.put("conversations", conv);
+    return conv;
   }
 
   async function createConversation(title?: string): Promise<string> {
@@ -64,19 +65,42 @@ export function useChatHistory(userId: string) {
 
   async function addMessage(sender: "user" | "bot", message: string) {
     if (!activeConversation) return;
-    const conv = conversations.find((c) => c.id === activeConversation);
-    if (!conv) return;
-    conv.messages.push({ sender, message });
-    await saveConversation(conv);
-    setConversations((prev) => prev.map((c) => (c.id === conv.id ? conv : c)));
+
+    setConversations((prev) => {
+      const updated = prev.map((conv) => {
+        if (conv.id === activeConversation) {
+          const newMessage = { sender, message };
+          return {
+            ...conv,
+            messages: [...conv.messages, newMessage],
+          };
+        }
+        return conv;
+      });
+      const updatedConv = updated.find((c) => c.id === activeConversation);
+      if (updatedConv) {
+        saveConversation(updatedConv);
+      }
+
+      return updated;
+    });
   }
 
   async function renameConversation(id: string, newTitle: string) {
-    const conv = conversations.find((c) => c.id === id);
-    if (!conv) return;
-    conv.title = newTitle;
-    await saveConversation(conv);
-    setConversations((prev) => prev.map((c) => (c.id === id ? conv : c)));
+    setConversations((prev) => {
+      const updated = prev.map((conv) => {
+        if (conv.id === id) {
+          return { ...conv, title: newTitle };
+        }
+        return conv;
+      });
+      const updatedConv = updated.find((c) => c.id === id);
+      if (updatedConv) {
+        saveConversation(updatedConv);
+      }
+
+      return updated;
+    });
   }
 
   async function deleteConversation(id: string) {
@@ -88,6 +112,48 @@ export function useChatHistory(userId: string) {
     }
   }
 
+  async function updateMessage(
+    conversationId: string,
+    messageIndex: number,
+    newMessage: string
+  ) {
+    setConversations((prev) => {
+      const updated = prev.map((conv) => {
+        if (conv.id === conversationId) {
+          const updatedMessages = conv.messages.map((msg, i) =>
+            i === messageIndex ? { ...msg, message: newMessage } : msg
+          );
+          return { ...conv, messages: updatedMessages };
+        }
+        return conv;
+      });
+
+      const updatedConv = updated.find((c) => c.id === conversationId);
+      if (updatedConv) {
+        saveConversation(updatedConv);
+      }
+
+      return updated;
+    });
+  }
+
+  async function trimConversation(conversationId: string, index: number) {
+    setConversations((prev) => {
+      const updated = prev.map((conv) => {
+        if (conv.id === conversationId) {
+          return { ...conv, messages: conv.messages.slice(0, index + 1) };
+        }
+        return conv;
+      });
+      const updatedConv = updated.find((c) => c.id === conversationId);
+      if (updatedConv) {
+        saveConversation(updatedConv);
+      }
+
+      return updated;
+    });
+  }
+
   return {
     conversations,
     messages:
@@ -96,7 +162,9 @@ export function useChatHistory(userId: string) {
     setActiveConversation,
     createConversation,
     addMessage,
+    updateMessage,
     renameConversation,
     deleteConversation,
+    trimConversation,
   };
 }

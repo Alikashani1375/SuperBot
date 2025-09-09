@@ -1,142 +1,246 @@
 "use client";
+
+import { useState, useEffect, useCallback } from "react";
 import { useChat } from "@/src/context/ChatContext";
-import { cn } from "@/src/lib/utils";
-import { Button } from "@/src/theme/ui/button";
-import { Card, CardContent } from "@/src/theme/ui/card";
 import { Input } from "@/src/theme/ui/input";
 import { ScrollArea } from "@/src/theme/ui/scroll-area";
-import { useState } from "react";
+import { Button } from "@/src/theme/ui/button";
+import { Trash2, Plus } from "lucide-react";
+import { Conversation } from "@/src/hooks/useChatHistory";
 
 export default function ChatSidebar() {
   const {
     conversations,
+    activeConversation,
     setActiveConversation,
     createConversation,
-    renameConversation,
     deleteConversation,
-    activeConversation,
+    renameConversation,
   } = useChat();
 
-  const [newChatInput, setNewChatInput] = useState("");
-  const [creatingNew, setCreatingNew] = useState(false);
-  const [renamingId, setRenamingId] = useState<string | null>(null);
-  const [renameInput, setRenameInput] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredConversations, setFilteredConversations] =
+    useState(conversations);
+  const [isRenaming, setIsRenaming] = useState<string | null>(null);
+  const [renameValue, setRenameValue] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
+  const [newChatName, setNewChatName] = useState("");
 
-  function handleCreateNew() {
-    if (!newChatInput.trim()) return;
-    createConversation(newChatInput.trim());
-    setNewChatInput("");
-    setCreatingNew(false);
-  }
+  const debounce = (func: Function, delay: number) => {
+    let timeoutId: NodeJS.Timeout;
+    return (...args: any[]) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(null, args), delay);
+    };
+  };
 
-  function handleRename(id: string) {
-    if (!renameInput.trim()) return;
-    renameConversation(id, renameInput.trim());
-    setRenamingId(null);
-  }
+  const filterConversations = useCallback(
+    (term: string) => {
+      if (!term.trim()) {
+        setFilteredConversations(conversations);
+        return;
+      }
+
+      const regex = new RegExp(term, "i");
+      const filtered = conversations.filter(
+        (conv) =>
+          regex.test(conv.title) ||
+          conv.messages.some((msg) => regex.test(msg.message))
+      );
+
+      setFilteredConversations(filtered);
+    },
+    [conversations]
+  );
+
+  const debouncedFilter = useCallback(
+    debounce((term: string) => {
+      filterConversations(term);
+    }, 1000),
+    [filterConversations]
+  );
+
+  useEffect(() => {
+    debouncedFilter(searchTerm);
+  }, [searchTerm, debouncedFilter]);
+
+  useEffect(() => {
+    filterConversations(searchTerm);
+  }, [conversations, searchTerm, filterConversations]);
+
+  const handleCreateConversation = async () => {
+    if (newChatName.trim()) {
+      await createConversation(newChatName.trim());
+      setNewChatName("");
+      setIsCreating(false);
+    }
+  };
+
+  const startRename = (conv: Conversation) => {
+    setIsRenaming(conv.id);
+    setRenameValue(conv.title);
+  };
+
+  const saveRename = async (id: string) => {
+    if (renameValue.trim()) {
+      await renameConversation(id, renameValue);
+    }
+    setIsRenaming(null);
+    setRenameValue("");
+  };
+
+  const cancelRename = () => {
+    setIsRenaming(null);
+    setRenameValue("");
+  };
 
   return (
-    <Card className="w-full  h-full flex flex-col rounded-none md:rounded-sm border-[1px] border-[#feca477a] bg-[var(--bg)] ">
-      <CardContent className="flex flex-col flex-1 p-0 w-full">
-        {creatingNew ? (
-          <div className="flex gap-2 m-2">
+    <div className="w-full bg-[var(--bg)] border-[1px] border-[#feca477a] h-full flex flex-col">
+      <div className="p-4 border-b border-[#feca477a]">
+        {isCreating ? (
+          <div className="space-y-2">
             <Input
-              placeholder="Chat name..."
-              value={newChatInput}
-              onChange={(e) => setNewChatInput(e.target.value)}
-              className="flex-1 max-w-[180px]"
+              type="text"
+              placeholder="Enter chat name..."
+              value={newChatName}
+              onChange={(e) => setNewChatName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleCreateConversation();
+                if (e.key === "Escape") setIsCreating(false);
+              }}
+              className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-400 rounded-sm"
+              autoFocus
             />
-            <Button
-              onClick={handleCreateNew}
-              variant="primary"
-              className="border-0"
-            >
-              Create
-            </Button>
-            <Button onClick={() => setCreatingNew(false)} variant="destructive">
-              X
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleCreateConversation}
+                className="flex-1 bg-green-600 hover:bg-green-700"
+                disabled={!newChatName.trim()}
+              >
+                Create
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setIsCreating(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+            </div>
           </div>
         ) : (
           <Button
-            onClick={() => setCreatingNew(true)}
-            variant="primary"
-            className="mb-2 rounded-none h-[42px] w-full md:rounded-t-sm   bg-gradient-to-br from-[#FDE047] to-[#FDB447] text-sm font-bold text-[#1A1C1E] transition-all hover:from-[#FDB447] hover:to-[#FDE047]"
+            onClick={() => setIsCreating(true)}
+            className="w-full bg-gradient-to-br from-[#FDE047] to-[#FDB447] text-sm font-bold text-[#1A1C1E] hover:from-[#FDB447] hover:to-[#FDE047]"
           >
-            + New Chat
+            <Plus size={16} className="mr-2" />
+            New Chat
           </Button>
         )}
+      </div>
+      <div className="p-4 border-b border-[#feca477a]">
+        <Input
+          type="text"
+          placeholder="Search conversations..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full bg-[var(--bg)] border-[var(--bg1)] text-white rounded-sm placeholder-gray-400"
+        />
+      </div>
 
-        <ScrollArea className="flex-1">
-          <div className="flex flex-col gap-1">
-            {conversations.map((conv) => (
-              <Card
-                key={conv.id}
-                className={cn(
-                  "flex items-center justify-between rounded-none border-0 p-3 cursor-pointer",
-                  activeConversation === conv.id
-                    ? "bg-gray-200 dark:bg-neutral-700"
-                    : ""
-                )}
-              >
-                {renamingId === conv.id ? (
-                  <div className="flex gap-4 flex-1">
+      <ScrollArea className="flex-1">
+        <div className="p-2">
+          {filteredConversations.map((conv) => (
+            <div
+              key={conv.id}
+              className={`p-3 rounded-sm mb-2 cursor-pointer transition-colors ${
+                activeConversation === conv.id
+                  ? "bg-[var(--bg1)] border-[1px] border-[#feca477a] "
+                  : "bg-[var(--bg1)] "
+              }`}
+              onClick={() => setActiveConversation(conv.id)}
+            >
+              <div className="flex items-center justify-between">
+                {isRenaming === conv.id ? (
+                  <div className="flex-1 flex items-center gap-2">
                     <Input
-                      value={renameInput}
-                      onChange={(e) => setRenameInput(e.target.value)}
+                      value={renameValue}
+                      onChange={(e) => setRenameValue(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") saveRename(conv.id);
+                        if (e.key === "Escape") cancelRename();
+                      }}
+                      className="flex-1 h-8 bg-gray-700 text-white border-gray-600 rounded-sm"
                       autoFocus
-                      className="flex-1"
                     />
                     <Button
-                      onClick={() => handleRename(conv.id)}
                       size="sm"
-                      variant="primary"
+                      onClick={() => saveRename(conv.id)}
+                      className="h-2 px-2 bg-green-600 hover:bg-green-700"
                     >
-                      Save
+                      ✓
                     </Button>
                     <Button
-                      onClick={() => setRenamingId(null)}
                       size="sm"
-                      className="bg-[var(--destructive)] text-white"
+                      variant="ghost"
+                      onClick={cancelRename}
+                      className="h-8 px-2 text-[var(--destructive)]"
                     >
-                      X
+                      ✗
                     </Button>
                   </div>
                 ) : (
                   <>
-                    <div
-                      onClick={() => setActiveConversation(conv.id)}
-                      className="flex-1"
-                    >
+                    <div className="flex-1 truncate text-sm text-[var(--foreground)]">
                       {conv.title}
                     </div>
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 ">
                       <Button
-                        onClick={() => {
-                          setRenamingId(conv.id);
-                          setRenameInput(conv.title);
+                        variant="ghost"
+                        className="h-6 w-6 text-xs"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          startRename(conv);
                         }}
-                        size="sm"
-                        className="me-2"
-                        variant="primary"
                       >
-                        Rename
+                        ✏️
                       </Button>
                       <Button
-                        onClick={() => deleteConversation(conv.id)}
-                        size="sm"
-                        className="bg-[var(--destructive)] text-white"
+                        size="icon"
+                        variant="ghost"
+                        className="h-6 w-6 text-red-400"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteConversation(conv.id);
+                        }}
                       >
-                        Delete
+                        <Trash2 size={14} />
                       </Button>
                     </div>
                   </>
                 )}
-              </Card>
-            ))}
-          </div>
-        </ScrollArea>
-      </CardContent>
-    </Card>
+              </div>
+
+              {conv.messages.length > 0 && (
+                <div className="text-xs text-gray-400 mt-1 truncate">
+                  {conv.messages[conv.messages.length - 1].message.substring(
+                    0,
+                    50
+                  )}
+                  {conv.messages[conv.messages.length - 1].message.length >
+                    50 && "..."}
+                </div>
+              )}
+            </div>
+          ))}
+
+          {filteredConversations.length === 0 && searchTerm && (
+            <div className="text-center text-gray-400 py-4">
+              No conversations found
+            </div>
+          )}
+        </div>
+      </ScrollArea>
+    </div>
   );
 }

@@ -22,12 +22,19 @@ export function ChatProvider({
 }) {
   const chat = useChatHistory(userId);
 
+  const updateMessage = (
+    conversationId: string,
+    messageIndex: number,
+    newMessage: string
+  ) => chat.updateMessage(conversationId, messageIndex, newMessage);
   const createConversation = (title?: string) => chat.createConversation(title);
   const renameConversation = (id: string, newTitle: string) =>
     chat.renameConversation(id, newTitle);
   const deleteConversation = (id: string) => chat.deleteConversation(id);
   const setActiveConversation = (id: string) => chat.setActiveConversation(id);
   const activeConversation = chat.activeConversation;
+  const trimConversation = (conversationId: string, index: number) =>
+    chat.trimConversation(conversationId, index);
 
   return (
     <ChatContext.Provider
@@ -38,6 +45,8 @@ export function ChatProvider({
         deleteConversation,
         setActiveConversation,
         activeConversation,
+        updateMessage,
+        trimConversation,
       }}
     >
       {children}

@@ -52,7 +52,7 @@ export function NavBar() {
             </Link>
           ))}
           <Button
-            className="bg-black text-white hover:bg-gray-800 !border-0"
+            className="text-black bg-gray-200 text-sm !border-0"
             onClick={logout}
           >
             Logout

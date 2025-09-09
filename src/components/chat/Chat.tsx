@@ -28,7 +28,7 @@ export default function ChatPage() {
 
   return (
     <ChatProvider userId={userId}>
-      <div className="flex gap-3 p-3 h-[calc(100vh-80px)]">
+      <div className="flex gap-3 p-3 h-[calc(100vh-120px)]">
         <div className="hidden md:block w-1/5">
           <ChatSidebar />
         </div>
