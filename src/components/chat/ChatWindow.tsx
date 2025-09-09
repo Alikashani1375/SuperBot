@@ -161,7 +161,7 @@ export default function ChatWindow() {
   };
 
   const components: React.ComponentProps<typeof ReactMarkdown>["components"] = {
-    code: ({ className, children, ...props }) => (
+    code: ({ children, ...props }) => (
       <code
         className="bg-gray-800 text-gray-200 p-1 rounded text-sm"
         {...props}

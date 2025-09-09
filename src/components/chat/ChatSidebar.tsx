@@ -26,13 +26,16 @@ export default function ChatSidebar() {
   const [isCreating, setIsCreating] = useState(false);
   const [newChatName, setNewChatName] = useState("");
 
-  const debounce = (func: Function, delay: number) => {
-    let timeoutId: NodeJS.Timeout;
-    return (...args: any[]) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func.apply(null, args), delay);
-    };
-  };
+  const debounce = useCallback(
+    <T extends unknown[]>(func: (...args: T) => void, delay: number) => {
+      let timeoutId: NodeJS.Timeout;
+      return (...args: T) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+      };
+    },
+    []
+  );
 
   const filterConversations = useCallback(
     (term: string) => {
@@ -57,7 +60,7 @@ export default function ChatSidebar() {
     debounce((term: string) => {
       filterConversations(term);
     }, 1000),
-    [filterConversations]
+    [debounce, filterConversations]
   );
 
   useEffect(() => {
