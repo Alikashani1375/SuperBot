@@ -3,11 +3,11 @@
 import { useChat } from "@/src/context/ChatContext";
 import { Button } from "@/src/theme/ui/button";
 import { Input } from "@/src/theme/ui/input";
-import { ScrollArea } from "@/src/theme/ui/scroll-area";
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Edit, Check, X, Copy, RefreshCw } from "lucide-react";
+import { Virtuoso } from "react-virtuoso";
 
 export default function ChatWindow() {
   const {
@@ -39,22 +39,18 @@ export default function ChatWindow() {
       </div>
     );
   }
+
   async function handleSaveEdit(newText: string) {
     if (editingIndex === null || !activeConversation) return;
 
     try {
-      // 1. ابتدا پیام کاربر را آپدیت کنید
       await updateMessage(activeConversation, editingIndex, newText);
-
-      // 2. مکالمه را از آن نقطه قطع کنید (پیام‌های بعدی را حذف کنید)
       await trimConversation(activeConversation, editingIndex);
 
       setEditingIndex(null);
       setEditValue("");
 
-      // 3. پاسخ جدید از AI دریافت کنید
       setLoading(true);
-
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -66,7 +62,6 @@ export default function ChatWindow() {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       setTypingText("");
-
       let botReply = "";
 
       while (true) {
@@ -77,7 +72,6 @@ export default function ChatWindow() {
         setTypingText(botReply);
       }
 
-      // 4. پاسخ جدید را به مکالمه اضافه کنید
       await addMessage("bot", botReply);
       setTypingText("");
     } catch (err) {
@@ -101,7 +95,6 @@ export default function ChatWindow() {
     }
 
     setLoading(true);
-
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -114,7 +107,6 @@ export default function ChatWindow() {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       setTypingText("");
-
       let botReply = "";
 
       while (true) {
@@ -199,91 +191,95 @@ export default function ChatWindow() {
     ),
   };
 
+  const items = typingText
+    ? [...messages, { sender: "bot", message: typingText, typing: true }]
+    : messages;
+
   return (
-    <div className="flex flex-col h-full flex-1 shadow-2xl rounded-sm border-[1px] border-[#feca477a] bg-[var(--bg)] w-auto">
-      <ScrollArea className="flex-1 my-5 px-4 py-3">
-        <div className="space-y-6">
-          {messages.map((msg, index: number) => (
-            <div className="group relative" key={index}>
-              {msg.sender === "user" ? (
-                <div className="flex justify-end">
-                  <div className="relative max-w-2xl">
-                    {editingIndex === index ? (
-                      <div className="bg-gray-800 rounded-2xl p-4 border border-gray-600">
-                        <textarea
-                          ref={textareaRef}
-                          value={editValue}
-                          onChange={(e) => setEditValue(e.target.value)}
-                          className="w-full bg-transparent text-white resize-none outline-none"
-                          rows={3}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter" && !e.shiftKey) {
-                              e.preventDefault();
-                              handleSaveEdit(editValue);
-                            }
-                            if (e.key === "Escape") {
-                              cancelEdit();
-                            }
-                          }}
-                          autoFocus
-                        />
-                        <div className="flex justify-end gap-2 mt-3">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={cancelEdit}
-                            className="h-8 px-3 text-xs"
-                          >
-                            <X size={14} className="mr-1" />
-                            Cancel
-                          </Button>
-                          <Button
-                            size="sm"
-                            onClick={() => handleSaveEdit(editValue)}
-                            className="h-8 px-3 text-xs bg-green-600 hover:bg-green-700"
-                          >
-                            <Check size={14} className="mr-1" />
-                            Save & Submit
-                          </Button>
-                        </div>
+    <div className="flex flex-col h-full flex-1 shadow-2xl rounded-sm border-[1px] border-[#feca477a] bg-[var(--bg)] w-full">
+      <Virtuoso
+        className="my-5  py-3"
+        data={items}
+        followOutput="smooth"
+        itemContent={(index, msg) => (
+          <div className="space-y-6 mx-5 group relative" key={index}>
+            {msg.sender === "user" ? (
+              <div className="flex justify-end">
+                <div className="relative max-w-2xl">
+                  {editingIndex === index ? (
+                    <div className="bg-gray-800 rounded-2xl p-4 border border-gray-600">
+                      <textarea
+                        ref={textareaRef}
+                        value={editValue}
+                        onChange={(e) => setEditValue(e.target.value)}
+                        className="w-full bg-transparent text-white resize-none outline-none"
+                        rows={3}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSaveEdit(editValue);
+                          }
+                          if (e.key === "Escape") cancelEdit();
+                        }}
+                        autoFocus
+                      />
+                      <div className="flex justify-end gap-2 mt-3">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={cancelEdit}
+                          className="h-8 px-3 text-xs"
+                        >
+                          <X size={14} className="mr-1" /> Cancel
+                        </Button>
+                        <Button
+                          size="sm"
+                          onClick={() => handleSaveEdit(editValue)}
+                          className="h-8 px-3 text-xs bg-green-600 hover:bg-green-700"
+                        >
+                          <Check size={14} className="mr-1" /> Save & Submit
+                        </Button>
                       </div>
-                    ) : (
-                      <div className="flex items-center">
-                        <div className="me-2 flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 bg-gray-700 hover:bg-gray-600 text-white"
-                            onClick={() => startEditing(index, msg.message)}
-                          >
-                            <Edit size={12} />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 bg-gray-700 hover:bg-gray-600 text-white"
-                            onClick={() => copyToClipboard(msg.message)}
-                          >
-                            <Copy size={12} />
-                          </Button>
-                        </div>
-                        <div className="whitespace-pre-wrap text-sm bg-gray-800 text-gray-200 rounded-2xl px-4 py-3 max-w-xs lg:max-w-md rounded-br-none">
-                          {msg.message}
-                        </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center">
+                      <div className="me-2 flex gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 bg-gray-700 hover:bg-gray-600 text-white"
+                          onClick={() => startEditing(index, msg.message)}
+                        >
+                          <Edit size={12} />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 bg-gray-700 hover:bg-gray-600 text-white"
+                          onClick={() => copyToClipboard(msg.message)}
+                        >
+                          <Copy size={12} />
+                        </Button>
                       </div>
-                    )}
-                  </div>
+                      <div className="whitespace-pre-wrap text-sm bg-gray-800 text-gray-200 rounded-2xl px-4 py-3 max-w-xs lg:max-w-md rounded-br-none">
+                        {msg.message}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="flex items-center max-w-2xl flex-row">
-                  <div className="bg-[#EAF0F6] text-gray-600 rounded-2xl px-4 py-3 text-sm rounded-bl-none">
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={components}
-                    >
-                      {msg.message}
-                    </ReactMarkdown>
-                  </div>
+              </div>
+            ) : (
+              <div className="flex items-center max-w-2xl flex-row">
+                <div className="bg-[#EAF0F6] text-gray-600 rounded-2xl px-4 py-3 text-sm rounded-bl-none">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={components}
+                  >
+                    {msg.message}
+                  </ReactMarkdown>
+                  {msg.typing && <span className="animate-pulse">▋</span>}
+                </div>
+                {!msg.typing && (
                   <div className="gap-1 flex ms-2">
                     <Button
                       variant="ghost"
@@ -293,11 +289,11 @@ export default function ChatWindow() {
                     >
                       <Copy color="gray" size={12} />
                     </Button>
-                    {index > 0 && messages[index - 1].sender === "user" && (
+                    {index > 0 && items[index - 1].sender === "user" && (
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-7 w-7 bg-gray-200 hover:bg-gray-300 "
+                        className="h-7 w-7 bg-gray-200 hover:bg-gray-300"
                         onClick={() => regenerateResponse(index - 1)}
                         disabled={loading}
                       >
@@ -305,27 +301,12 @@ export default function ChatWindow() {
                       </Button>
                     )}
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
-
-          {typingText && (
-            <div className="flex justify-start">
-              <div className="max-w-2xl text-sm bg-[#EAF0F6] text-gray-600 rounded-2xl px-4 py-3">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={components}
-                >
-                  {typingText}
-                </ReactMarkdown>
-                <span className="animate-pulse">▋</span>
+                )}
               </div>
-            </div>
-          )}
-        </div>
-      </ScrollArea>
-
+            )}
+          </div>
+        )}
+      />
       <div className="p-4 border-t-[1px] border-[#feca477a] ">
         <div className="flex items-center gap-3  mx-auto">
           {editingIndex === null ? (
@@ -341,7 +322,7 @@ export default function ChatWindow() {
                   }
                 }}
                 placeholder="Message"
-                className="flex-1 rounded-sm py-4 px-4 bg-[var(--primary)]  border-0 focus-visible:ring-2 focus-visible:ring-[#feca477a]"
+                className="flex-1 rounded-sm py-4 px-4 bg-[var(--primary)] border-0 focus-visible:ring-2 focus-visible:ring-[#feca477a]"
               />
               <Button
                 onClick={() => sendMessage()}

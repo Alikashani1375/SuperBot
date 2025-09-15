@@ -5,6 +5,7 @@ import { openDB } from "idb";
 export type ChatMessage = {
   sender: "user" | "bot";
   message: string;
+  typing?: boolean;
 };
 
 export type Conversation = {

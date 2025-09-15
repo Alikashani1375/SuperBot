@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const { message } = await req.json();
 
     const stream = await client.chat.completions.stream({
-      model: "openai/gpt-oss-20b:fireworks-ai",
+      model: "meta-llama/Llama-3.1-8B-Instruct:fireworks-ai",
       messages: [
         { role: "system", content: FinestelData },
         { role: "user", content: message },
