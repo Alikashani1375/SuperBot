@@ -7,14 +7,11 @@ import ThemeChangerBtn from "../utils/ThemeChangerBtn";
 import Image from "next/image";
 import { Button } from "@/src/theme/ui/button";
 import { Loader } from "lucide-react";
-import { useTheme } from "next-themes";
-import { cn } from "@/src/lib/utils";
 
 export default function LoginPage() {
-  const { token, login, signup, loading } = useAuth();
+  const { token, login, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { theme } = useTheme();
   const backUrl = searchParams.get("backUrl") || "/";
 
   const [username, setUsername] = useState("");
@@ -81,16 +78,6 @@ export default function LoginPage() {
           >
             {loading ? <Loader className="animate-spin" /> : "Login"}
           </Button>
-
-          <p className="text-center text-sm text-gray-400">
-            Don’t have an account?{" "}
-            <button
-              onClick={() => signup(username, password)}
-              className="text-yellow-400 hover:underline"
-            >
-              Sign up
-            </button>
-          </p>
         </div>
       </div>
     </div>
