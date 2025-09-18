@@ -41,7 +41,7 @@ export default function LoginPage() {
       <div className="flex flex-col  w-full mt-10 max-w-2xl bg-[var(--primary)] border border-gray-800 p-6 rounded-sm mx-auto text-black">
         <label className="text-[var(--secondary)] mb-2">Username</label>
         <input
-          className="bg-gray-900 text-gray-200 rounded-sm px-3 py-2 mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="text-[var(--foreground)] bg-[var(--bg1)] rounded-sm px-3 py-2 mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
           placeholder="Enter your username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -50,7 +50,7 @@ export default function LoginPage() {
         <label className="text-[var(--secondary)] mb-2">Password</label>
         <input
           type="password"
-          className="bg-gray-900 rounded-sm text-gray-200 px-3 py-2 mb-6 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="text-[var(--foreground)] bg-[var(--bg1)] rounded-sm  px-3 py-2 mb-6 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -58,14 +58,14 @@ export default function LoginPage() {
 
         <div className="flex gap-2 justify-start">
           <Button
-            className="cursor-pointer rounded-sm  px-4 py-2 font-medium transition bg-[var(--primary)] border-[1px] border-white text-white"
+            className="cursor-pointer rounded-sm text-[var(--foreground)] px-4 py-2 font-medium transition bg-[var(--primary)] border-[1px] border-white "
             onClick={() => login(username, password)}
             disabled={loading}
           >
             {loading ? <Loader className="animate-spin" /> : "Login"}
           </Button>
           <Button
-            className="rounded-sm cursor-pointer   px-4 py-2 font-medium  transition bg-[var(--primary)] border-[1px] border-white text-white"
+            className="rounded-sm cursor-pointer   px-4 py-2 font-medium  transition bg-[var(--primary)] border-[1px] border-white text-[var(--foreground)]"
             onClick={() => signup(username, password)}
             disabled={loading}
           >

@@ -228,7 +228,7 @@ export default function ChatWindow() {
                           variant="ghost"
                           size="sm"
                           onClick={cancelEdit}
-                          className="h-8 px-3 text-xs text-[var(--foreground)] "
+                          className="h-8 px-3 text-xs text-[var(--foreground)]"
                         >
                           <X size={14} className="mr-1 " /> Cancel
                         </Button>
@@ -242,8 +242,8 @@ export default function ChatWindow() {
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-center">
-                      <div className="me-2 flex gap-1">
+                    <div className="flex items-center group">
+                      <div className="me-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button
                           variant="ghost"
                           size="icon"
@@ -261,7 +261,8 @@ export default function ChatWindow() {
                           <Copy size={12} />
                         </Button>
                       </div>
-                      <div className="whitespace-pre-wrap bg-[var(--userchatbg)] text-[var(--userchat)] text-sm rounded-2xl px-4 py-3 max-w-xs lg:max-w-md rounded-br-none">
+
+                      <div className="whitespace-pre-wrap break-words bg-[var(--userchatbg)] text-[var(--userchat)] text-sm rounded-2xl px-4 py-3 max-w-xs md:max-w-md rounded-br-none">
                         {msg.message}
                       </div>
                     </div>
@@ -269,7 +270,7 @@ export default function ChatWindow() {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center max-w-2xl flex-row">
+              <div className="flex items-center max-w-2xl flex-row group space-y-2">
                 <div className="bg-[var(--primary)] text-[var(--foreground)] rounded-2xl px-4 py-3 text-sm rounded-bl-none">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
@@ -280,7 +281,7 @@ export default function ChatWindow() {
                   {msg.typing && <span className="animate-pulse">▋</span>}
                 </div>
                 {!msg.typing && (
-                  <div className="gap-1 flex ms-2">
+                  <div className="gap-1 flex ms-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <Button
                       variant="ghost"
                       size="icon"

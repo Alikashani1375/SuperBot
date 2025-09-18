@@ -110,7 +110,7 @@ export default function ChatSidebar() {
                 if (e.key === "Enter") handleCreateConversation();
                 if (e.key === "Escape") setIsCreating(false);
               }}
-              className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-400 rounded-sm"
+              className="w-full text-[var(--foreground)] bg-[var(--bg1)] border-gray-700 placeholder-gray-400 rounded-sm"
               autoFocus
             />
             <div className="flex gap-2">
