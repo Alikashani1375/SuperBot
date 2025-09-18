@@ -5,8 +5,13 @@ import { ChatProvider } from "@/src/context/ChatContext";
 import ChatSidebar from "./ChatSidebar";
 import ChatWindow from "./ChatWindow";
 import { Button } from "@/src/theme/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/src/theme/ui/sheet";
-import { Menu } from "lucide-react";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/src/theme/ui/sheet";
+import { Menu, X } from "lucide-react";
 
 export default function ChatPage() {
   const userId = "user-123";
@@ -38,15 +43,18 @@ export default function ChatPage() {
             <SheetTrigger asChild>
               <Button
                 variant="outline"
-                className="fixed top-28 left-5 z-40 md:hidden bg-[#1A1C1E] border-0"
+                className="fixed top-26 left-5 z-40 md:hidden bg-[#1A1C1E] border-0 p-0"
               >
-                <Menu className="h-5 w-5 text-white" />
+                <Menu className="h-5 w-5 text-[var(--foreground)] bg-[var(--bg1)]" />
               </Button>
             </SheetTrigger>
             <SheetContent
               side="left"
-              className="w-full p-0 bg-[#1A1C1E] border-r border-[#FECB47] animate-in fade-in-90 duration-700"
+              className="w-full p-0  bg-[var(--bg1)] border-r border-[#FECB47] animate-in fade-in-90 duration-700"
             >
+              <SheetClose asChild>
+                <Button className="bg-[var(--bg1)] text-[var(--foreground)] px-2 py-5 w-full"></Button>
+              </SheetClose>
               <ChatSidebar />
             </SheetContent>
           </Sheet>

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useChat } from "@/src/context/ChatContext";
 import { Input } from "@/src/theme/ui/input";
 import { Button } from "@/src/theme/ui/button";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus, Edit } from "lucide-react";
 import { Conversation } from "@/src/hooks/useChatHistory";
 
 export default function ChatSidebar() {
@@ -116,7 +116,7 @@ export default function ChatSidebar() {
             <div className="flex gap-2">
               <Button
                 onClick={handleCreateConversation}
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 bg-[var(--success)] hover:bg-[var(--success)]"
                 disabled={!newChatName.trim()}
               >
                 Create
@@ -199,18 +199,19 @@ export default function ChatSidebar() {
                     <div className="flex gap-1 ">
                       <Button
                         variant="ghost"
-                        className="h-6 w-6 text-xs"
+                        size="icon"
+                        className="h-6 w-6 text-xs bg-[var(--userchatbg)] text-[var(--userchat)]"
                         onClick={(e) => {
                           e.stopPropagation();
                           startRename(conv);
                         }}
                       >
-                        ✏️
+                        <Edit size={12} />
                       </Button>
                       <Button
                         size="icon"
                         variant="ghost"
-                        className="h-6 w-6 text-red-400"
+                        className="h-6 w-6 text-xs bg-[var(--userchatbg)] text-[var(--userchat)]"
                         onClick={(e) => {
                           e.stopPropagation();
                           deleteConversation(conv.id);

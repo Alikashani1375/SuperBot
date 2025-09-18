@@ -11,6 +11,7 @@
   --destructive: #ff2321;
   --bg: #ffffff;
   --bg1: #ececec;
+  --success: #00ff00;
 }
 
 .dark {
@@ -23,6 +24,7 @@
   --destructive: #8d1b19;
   --bg: #1a1c1e;
   --bg1: #2e3031;
+  --success: #047e04;
 }
 .bg-pattern {
   background: linear-gradient(

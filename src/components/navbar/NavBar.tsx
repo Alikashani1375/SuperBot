@@ -17,9 +17,9 @@ import { cn } from "@/src/lib/utils";
 
 const items = [
   { name: "Home", link: "/" },
-  { name: "Chat", link: "/chat" },
-  { name: "About", link: "/about" },
-  { name: "Sign In", link: "/signin" },
+  { name: "Chat", link: "/" },
+  { name: "About", link: "/" },
+  { name: "Sign In", link: "/" },
 ];
 
 export function NavBar() {
@@ -47,9 +47,9 @@ export function NavBar() {
         <div className="hidden md:flex gap-6">
           {items.map((item, index) => (
             <Link
-              key={index}
               href={item.link}
-              className="py-2 px-3 rounded-md text-sm font-semibold text-[var(--foreground)] transition-colors duration-200 hover:bg-gray-700"
+              key={index}
+              className="py-2 px-3 rounded-md text-sm font-semibold text-[var(--foreground)] transition-colors duration-200 "
             >
               {item.name}
             </Link>
@@ -67,31 +67,29 @@ export function NavBar() {
             <SheetTrigger asChild>
               <Button
                 variant="outline"
-                className="bg-transparent border-gray-600"
+                className="bg-transparent border-gray-600 p-2"
               >
-                <Menu className="h-5 w-5 text-white" />
-                <span className="sr-only">باز کردن منو</span>
+                <Menu className="h-5 w-5 text-[var(--foreground)]" />
               </Button>
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-[300px] sm:w-[400px] bg-[#1A1C1E] border-r border-[#feca477a]"
+              className="w-[300px] sm:w-[400px] bg-[var(--bg1)] border-r border-[#feca477a]"
             >
               <div className="flex flex-col space-y-8 mt-10">
                 {items.map((item, index) => (
                   <SheetClose asChild key={index}>
-                    <Link
-                      href={item.link}
-                      className="py-2 px-3 rounded-md text-lg font-semibold text-white transition-colors duration-200 hover:bg-gray-700"
+                    <Button
+                      className="py-2 px-3 rounded-md text-lg font-semibold bg-[var(--primary)] transition-colors duration-200 "
                       onClick={() => setIsOpen(false)}
                     >
                       {item.name}
-                    </Link>
+                    </Button>
                   </SheetClose>
                 ))}
                 <SheetClose asChild>
                   <Button
-                    className="bg-black text-white hover:bg-gray-800 !border-0 w-full justify-start text-lg py-2 px-3 h-auto"
+                    className="bg-[var(--bg1)] !border-0 w-full justify-center text-lg py-2 px-3 h-auto"
                     onClick={() => {
                       logout();
                       setIsOpen(false);
