@@ -172,13 +172,13 @@ export default function ChatSidebar() {
                         if (e.key === "Enter") saveRename(conv.id);
                         if (e.key === "Escape") cancelRename();
                       }}
-                      className="flex-1 h-8 bg-gray-700 text-white border-gray-600 rounded-sm"
+                      className="flex-1 h-8 bg-[var(--bg)] text-[var(--foreground)] border-[var(--bg1)] rounded-sm"
                       autoFocus
                     />
                     <Button
                       size="sm"
                       onClick={() => saveRename(conv.id)}
-                      className="h-2 px-2 bg-green-600 hover:bg-green-700"
+                      className="h-6 px-2 bg-[var(--success)] hover:bg-[var(--success)]"
                     >
                       ✓
                     </Button>
@@ -186,7 +186,7 @@ export default function ChatSidebar() {
                       size="sm"
                       variant="ghost"
                       onClick={cancelRename}
-                      className="h-8 px-2 text-[var(--destructive)]"
+                      className="h-6 px-2 bg-[var(--destructive)] text-[var(--foreground)]"
                     >
                       ✗
                     </Button>

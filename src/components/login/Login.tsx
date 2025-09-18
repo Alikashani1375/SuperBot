@@ -24,7 +24,12 @@ export default function LoginPage() {
   }, [loading, token, backUrl, router]);
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
+    <div
+      className="w-full h-full flex flex-col justify-center items-center"
+      onKeyDown={(e) => {
+        if (e.key === "Enter") login(username, password);
+      }}
+    >
       <div className="flex items-center gap-2 mt-10 bg-[var(--primary)] p-2 rounded-sm">
         <Image
           src="/logo.svg"
