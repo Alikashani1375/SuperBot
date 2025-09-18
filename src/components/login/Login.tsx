@@ -7,11 +7,14 @@ import ThemeChangerBtn from "../utils/ThemeChangerBtn";
 import Image from "next/image";
 import { Button } from "@/src/theme/ui/button";
 import { Loader } from "lucide-react";
+import { useTheme } from "next-themes";
+import { cn } from "@/src/lib/utils";
+
 export default function LoginPage() {
   const { token, login, signup, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const { theme } = useTheme();
   const backUrl = searchParams.get("backUrl") || "/";
 
   const [username, setUsername] = useState("");
@@ -25,57 +28,69 @@ export default function LoginPage() {
 
   return (
     <div
-      className="w-full h-full flex flex-col justify-center items-center"
+      className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-gray-900 via-black to-gray-800 px-4"
       onKeyDown={(e) => {
         if (e.key === "Enter") login(username, password);
       }}
     >
-      <div className="flex items-center gap-2 mt-10 bg-[var(--primary)] p-2 rounded-sm">
+      <div className="flex items-center gap-3 mb-10">
         <Image
           src="/logo.svg"
           alt="Logo"
-          width={128}
-          height={32}
-          className="w-32 mb-[2px]"
+          width={140}
+          height={40}
+          className="w-36"
         />
-        <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#FDE047] to-[#FDB447]">
+        <div className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
           Ai Assistant
         </div>
         <ThemeChangerBtn />
       </div>
-      <div className="flex flex-col  w-full mt-10 max-w-2xl bg-[var(--primary)] border border-gray-800 p-6 rounded-sm mx-auto text-black">
-        <label className="text-[var(--secondary)] mb-2">Username</label>
+
+      <div className="w-full max-w-md bg-[var(--bg1)] border border-gray-700 rounded-2xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-center text-[var(--foreground)] mb-6">
+          Welcome Back
+        </h2>
+
+        <label className="text-[var(--secondary)] text-sm mb-1 block">
+          Username
+        </label>
         <input
-          className="text-[var(--foreground)] bg-[var(--bg1)] rounded-sm px-3 py-2 mb-4 border border-gray-700 "
+          className="w-full text-[var(--foreground)] bg-[var(--bg1)] rounded-lg px-4 py-2 mb-4 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition"
           placeholder="Enter your username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
 
-        <label className="text-[var(--secondary)] mb-2">Password</label>
+        <label className="text-[var(--secondary)] text-sm mb-1 block">
+          Password
+        </label>
         <input
           type="password"
-          className="text-[var(--foreground)] bg-[var(--bg1)] rounded-sm  px-3 py-2 mb-6 border border-gray-700 "
+          className="w-full text-[var(--foreground)] bg-[var(--bg1)] rounded-lg px-4 py-2 mb-6 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition"
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <div className="flex gap-2 justify-start">
+        <div className="flex flex-col gap-3">
           <Button
-            className="cursor-pointer rounded-sm text-[var(--foreground)] px-4 py-2 font-medium transition bg-[var(--primary)] hover:bg-[var(--primary)] border-[1px] border-white "
+            className="w-full rounded-lg px-4 py-2 font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 text-black hover:opacity-90 transition"
             onClick={() => login(username, password)}
             disabled={loading}
           >
             {loading ? <Loader className="animate-spin" /> : "Login"}
           </Button>
-          <Button
-            className="rounded-sm cursor-pointer   px-4 py-2 font-medium  transition bg-[var(--primary)] border-[1px] hover:bg-[var(--primary)] border-white text-[var(--foreground)]"
-            onClick={() => signup(username, password)}
-            disabled={loading}
-          >
-            {loading ? <Loader className="animate-spin" /> : "Sign Up"}
-          </Button>
+
+          <p className="text-center text-sm text-gray-400">
+            Don’t have an account?{" "}
+            <button
+              onClick={() => signup(username, password)}
+              className="text-yellow-400 hover:underline"
+            >
+              Sign up
+            </button>
+          </p>
         </div>
       </div>
     </div>
