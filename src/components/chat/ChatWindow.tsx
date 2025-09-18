@@ -247,7 +247,7 @@ export default function ChatWindow() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-7 w-7 bg-gray-700 hover:bg-gray-600 text-white"
+                          className="h-7 w-7 bg-[var(--userchatbg)] text-[var(--userchat)]"
                           onClick={() => startEditing(index, msg.message)}
                         >
                           <Edit size={12} />
@@ -255,13 +255,13 @@ export default function ChatWindow() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-7 w-7 bg-gray-700 hover:bg-gray-600 text-white"
+                          className="h-7 w-7 bg-[var(--userchatbg)] text-[var(--userchat)]"
                           onClick={() => copyToClipboard(msg.message)}
                         >
                           <Copy size={12} />
                         </Button>
                       </div>
-                      <div className="whitespace-pre-wrap text-sm bg-gray-800 text-gray-200 rounded-2xl px-4 py-3 max-w-xs lg:max-w-md rounded-br-none">
+                      <div className="whitespace-pre-wrap bg-[var(--userchatbg)] text-[var(--userchat)] text-sm rounded-2xl px-4 py-3 max-w-xs lg:max-w-md rounded-br-none">
                         {msg.message}
                       </div>
                     </div>

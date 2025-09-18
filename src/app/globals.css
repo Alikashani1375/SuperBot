@@ -5,6 +5,8 @@
   --background: #ffffff;
   --foreground: #000000;
   --primary: #d5d5db;
+  --userchat: #0a0a0a;
+  --userchatbg: #d4d4d4;
   --secondary: #363636;
   --destructive: #ff2321;
   --bg: #ffffff;
@@ -15,6 +17,8 @@
   --background: #0a0a0ad8;
   --foreground: #ededed;
   --primary: #0f0f12;
+  --userchat: #ebe4e4;
+  --userchatbg: #313131;
   --secondary: #8b8b8b;
   --destructive: #8d1b19;
   --bg: #1a1c1e;
