@@ -39,7 +39,7 @@ export function NavBar() {
             className={cn("w-32 mb-[2px]", theme === "light" && "invert")}
           />
           <div className="text-sm text-nowrap lg:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#FDE047] to-[#FDB447]">
-            Ai Assistant
+            AI Assistant
           </div>
           <ThemeChangerBtn />
         </div>
