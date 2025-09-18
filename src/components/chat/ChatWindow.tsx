@@ -207,12 +207,12 @@ export default function ChatWindow() {
               <div className="flex justify-end">
                 <div className="relative max-w-2xl">
                   {editingIndex === index ? (
-                    <div className="bg-gray-800 rounded-2xl p-4 border border-gray-600">
+                    <div className="bg-[var(--bg1)] rounded-2xl p-4 border border-gray-600">
                       <textarea
                         ref={textareaRef}
                         value={editValue}
                         onChange={(e) => setEditValue(e.target.value)}
-                        className="w-full bg-transparent text-white resize-none outline-none"
+                        className="w-full  text-[var(--foreground)] resize-none outline-none"
                         rows={3}
                         onKeyDown={(e) => {
                           if (e.key === "Enter" && !e.shiftKey) {
@@ -228,9 +228,9 @@ export default function ChatWindow() {
                           variant="ghost"
                           size="sm"
                           onClick={cancelEdit}
-                          className="h-8 px-3 text-xs"
+                          className="h-8 px-3 text-xs text-[var(--foreground)] "
                         >
-                          <X size={14} className="mr-1" /> Cancel
+                          <X size={14} className="mr-1 " /> Cancel
                         </Button>
                         <Button
                           size="sm"
