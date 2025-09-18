@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useChat } from "@/src/context/ChatContext";
 import { Input } from "@/src/theme/ui/input";
-import { ScrollArea } from "@/src/theme/ui/scroll-area";
 import { Button } from "@/src/theme/ui/button";
 import { Trash2, Plus } from "lucide-react";
 import { Conversation } from "@/src/hooks/useChatHistory";
@@ -151,7 +150,7 @@ export default function ChatSidebar() {
         />
       </div>
 
-      <ScrollArea className="flex-1">
+      <div className="flex-1 overflow-y-auto">
         <div className="p-2">
           {filteredConversations.map((conv) => (
             <div
@@ -243,7 +242,7 @@ export default function ChatSidebar() {
             </div>
           )}
         </div>
-      </ScrollArea>
+      </div>
     </div>
   );
 }

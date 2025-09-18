@@ -10,7 +10,7 @@ export default function ThemeChangerBtn() {
   return (
     <Button
       variant="outline"
-      className="ms-5 w-20"
+      className="ms-2 w-10  lg:w-10 p-1"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {theme === "dark" ? <Moon size={20} /> : <Sun size={20} />}

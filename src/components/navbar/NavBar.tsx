@@ -35,7 +35,7 @@ export function NavBar() {
             height={32}
             className="w-32 mb-[2px]"
           />
-          <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#FDE047] to-[#FDB447]">
+          <div className="text-sm text-nowrap lg:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#FDE047] to-[#FDB447]">
             Ai Assistant
           </div>
           <ThemeChangerBtn />

@@ -6,6 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 import ThemeChangerBtn from "../utils/ThemeChangerBtn";
 import Image from "next/image";
 import { Button } from "@/src/theme/ui/button";
+import { Loader } from "lucide-react";
 export default function LoginPage() {
   const { token, login, signup, loading } = useAuth();
   const router = useRouter();
@@ -21,8 +22,6 @@ export default function LoginPage() {
       router.push(backUrl);
     }
   }, [loading, token, backUrl, router]);
-
-  if (loading) return <p className="text-white">Loading...</p>;
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
@@ -63,14 +62,14 @@ export default function LoginPage() {
             onClick={() => login(username, password)}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Login"}
+            {loading ? <Loader className="animate-spin" /> : "Login"}
           </Button>
           <Button
             className="rounded-sm cursor-pointer   px-4 py-2 font-medium  transition bg-[var(--primary)] border-[1px] border-white text-white"
             onClick={() => signup(username, password)}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Sign Up"}
+            {loading ? <Loader className="animate-spin" /> : "Sign Up"}
           </Button>
         </div>
       </div>

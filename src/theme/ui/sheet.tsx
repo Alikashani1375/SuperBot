@@ -6,7 +6,7 @@ import * as React from "react";
 
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cn } from "@/src/lib/utils";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // اضافه کردن این import
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const Sheet = SheetPrimitive.Root;
 

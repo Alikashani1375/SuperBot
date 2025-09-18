@@ -10,6 +10,7 @@ export function useAuth() {
   const router = useRouter();
 
   const login = useCallback(async (username: string, password: string) => {
+    setLoading(true);
     const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -21,9 +22,11 @@ export function useAuth() {
       await saveToken(data.token);
       setToken(data.token);
     }
+    setLoading(false);
   }, []);
 
   const signup = useCallback(async (username: string, password: string) => {
+    setLoading(true);
     const res = await fetch("/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -35,6 +38,7 @@ export function useAuth() {
       await saveToken(data.token);
       setToken(data.token);
     }
+    setLoading(false);
   }, []);
 
   const logout = useCallback(async () => {

@@ -29,7 +29,7 @@ export default function ChatPage() {
   return (
     <ChatProvider userId={userId}>
       <div className="flex gap-3 p-3 h-[calc(100vh-120px)]">
-        <div className="hidden md:block w-1/5">
+        <div className="hidden md:block w-2/5 xl:w-1/5">
           <ChatSidebar />
         </div>
 
@@ -38,21 +38,21 @@ export default function ChatPage() {
             <SheetTrigger asChild>
               <Button
                 variant="outline"
-                className="fixed top-24 left-5 z-40 md:hidden bg-[#1A1C1E] border-0"
+                className="fixed top-28 left-5 z-40 md:hidden bg-[#1A1C1E] border-0"
               >
                 <Menu className="h-5 w-5 text-white" />
               </Button>
             </SheetTrigger>
             <SheetContent
               side="left"
-              className="w-80 p-0 bg-[#1A1C1E] border-r border-[#FECB47] animate-in fade-in-90 duration-700"
+              className="w-full p-0 bg-[#1A1C1E] border-r border-[#FECB47] animate-in fade-in-90 duration-700"
             >
               <ChatSidebar />
             </SheetContent>
           </Sheet>
         )}
 
-        <div className="w-full md:w-4/5">
+        <div className="w-full md:w-3/5 xl:w-4/5">
           <ChatWindow />
         </div>
       </div>
