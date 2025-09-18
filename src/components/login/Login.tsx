@@ -44,7 +44,7 @@ export default function LoginPage() {
         <ThemeChangerBtn />
       </div>
 
-      <div className="w-full max-w-md bg-[var(--bg1)] border border-gray-700 rounded-2xl shadow-lg p-8">
+      <div className="w-full max-w-md bg-[var(--bg1)] border border-gray-700 rounded-sm shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center text-[var(--foreground)] mb-6">
           Welcome Back
         </h2>
@@ -53,7 +53,7 @@ export default function LoginPage() {
           Username
         </label>
         <input
-          className="w-full text-[var(--foreground)] bg-[var(--bg1)] rounded-lg px-4 py-2 mb-4 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition"
+          className="w-full text-[var(--foreground)] bg-[var(--bg1)] rounded-sm px-4 py-2 mb-4 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition"
           placeholder="Enter your username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -64,7 +64,7 @@ export default function LoginPage() {
         </label>
         <input
           type="password"
-          className="w-full text-[var(--foreground)] bg-[var(--bg1)] rounded-lg px-4 py-2 mb-6 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition"
+          className="w-full text-[var(--foreground)] bg-[var(--bg1)] rounded-sm px-4 py-2 mb-6 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition"
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -72,7 +72,7 @@ export default function LoginPage() {
 
         <div className="flex flex-col gap-3">
           <Button
-            className="w-full rounded-lg px-4 py-2 font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 text-black hover:opacity-90 transition"
+            className="w-full rounded-sm px-4 py-2 font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 text-black hover:opacity-90 transition"
             onClick={() => login(username, password)}
             disabled={loading}
           >
