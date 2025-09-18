@@ -146,7 +146,7 @@ export default function ChatSidebar() {
           placeholder="Search conversations..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full bg-[var(--bg)] border-[var(--bg1)] text-white rounded-sm placeholder-gray-400"
+          className="w-full bg-[var(--bg)] border-[var(--bg1)] text-[var(--foreground)] rounded-sm placeholder-gray-400"
         />
       </div>
 
