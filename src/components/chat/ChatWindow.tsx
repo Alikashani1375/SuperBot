@@ -173,7 +173,7 @@ export default function ChatWindow() {
     ),
     th: ({ children, ...props }) => (
       <th
-        className="border border-gray-300 px-3 py-2 bg-gray-700 font-semibold"
+        className="border border-gray-300 px-3 py-2 bg-gray-700 font-medium"
         {...props}
       >
         {children}
@@ -270,7 +270,7 @@ export default function ChatWindow() {
               </div>
             ) : (
               <div className="flex items-center max-w-2xl flex-row">
-                <div className="bg-[#EAF0F6] text-gray-600 rounded-2xl px-4 py-3 text-sm rounded-bl-none">
+                <div className="bg-[var(--primary)] text-[var(--foreground)] rounded-2xl px-4 py-3 text-sm rounded-bl-none">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={components}
@@ -284,7 +284,7 @@ export default function ChatWindow() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-7 w-7 bg-gray-200 hover:bg-gray-300"
+                      className="h-7 w-7 bg-[var(--primary)] text-[var(--foreground)]"
                       onClick={() => copyToClipboard(msg.message)}
                     >
                       <Copy color="gray" size={12} />
@@ -293,7 +293,7 @@ export default function ChatWindow() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-7 w-7 bg-gray-200 hover:bg-gray-300"
+                        className="h-7 w-7 bg-[var(--primary)] text-[var(--foreground)]"
                         onClick={() => regenerateResponse(index - 1)}
                         disabled={loading}
                       >
