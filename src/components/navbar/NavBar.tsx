@@ -31,15 +31,8 @@ export function NavBar() {
     <nav className="w-full border-b-[1px] border-[#feca477a] bg-[var(--bg)]">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         <div className="flex items-center gap-2">
-          <Image
-            src="/logo.svg"
-            alt="Logo"
-            width={128}
-            height={32}
-            className={cn("w-32 mb-[2px]", theme === "light" && "invert")}
-          />
-          <div className="text-sm text-nowrap lg:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#FDE047] to-[#FDB447]">
-            AI Assistant
+          <div className="text-sm text-nowrap lg:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#FDE047] to-[#439b10]">
+            SuperBot AI Assistant
           </div>
           <ThemeChangerBtn />
         </div>

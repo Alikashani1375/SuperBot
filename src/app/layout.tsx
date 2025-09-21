@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Finestel Ai Assistant",
+  title: "SuperBot Ai Assistant",
   description: "Designed by Ali Kashani",
 };
 export default function RootLayout({

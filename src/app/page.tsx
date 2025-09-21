@@ -31,7 +31,7 @@ export default function Page() {
       <NavBar />
       <Chat />
       <div className="bg-[var(--bg)]  py-4 text-center text-xs text-gray-500 border-t-[1px] border-[#feca477a] ">
-        © {new Date().getFullYear()} Finestel. All rights reserved.
+        © {new Date().getFullYear()} SuperBot. All rights reserved.
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import { FinestelData } from "@/src/lib/finestelData";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 
@@ -14,7 +13,7 @@ export async function POST(req: Request) {
     const stream = await client.chat.completions.stream({
       model: "meta-llama/Llama-3.1-8B-Instruct:fireworks-ai",
       messages: [
-        { role: "system", content: FinestelData },
+        { role: "system", content: "You are a helpful assistant." },
         { role: "user", content: message },
       ],
     });

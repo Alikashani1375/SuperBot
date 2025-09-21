@@ -1,10 +1,10 @@
-# Finestel LLM ChatBot
+# SuperBot Ai Assistant
 
 An AI-powered assistant designed to introduce and guide users through the company’s services.
 
 ## Features
 
-- AI responds using **Finestel landing page data**
+- AI responds using ** landing page data**
 - Create new chats
 - Edit existing chats
 - Rename or delete chat sessions
@@ -17,8 +17,8 @@ An AI-powered assistant designed to introduce and guide users through the compan
 
 ## Tech Stack
 
-- React.js  
-- TailwindCSS  
-- shadcn/ui  
-- next-themes  
+- React.js
+- TailwindCSS
+- shadcn/ui
+- next-themes
 - IndexedDB
