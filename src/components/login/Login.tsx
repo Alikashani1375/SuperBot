@@ -31,15 +31,8 @@ export default function LoginPage() {
       }}
     >
       <div className="flex items-center gap-3 mb-10">
-        <Image
-          src="/logo.svg"
-          alt="Logo"
-          width={140}
-          height={40}
-          className="w-36"
-        />
-        <div className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-          Ai Assistant
+        <div className="text-sm text-nowrap lg:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#FDE047] to-[#d4c00d]">
+          SuperBot AI Assistant
         </div>
         <ThemeChangerBtn />
       </div>
@@ -47,6 +40,10 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-[var(--bg1)] border border-gray-700 rounded-sm shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center text-[var(--foreground)] mb-6">
           Welcome Back
+          <br />
+          <span className="text-xs">
+            You can login with any username and password
+          </span>
         </h2>
 
         <label className="text-[var(--secondary)] text-sm mb-1 block">
