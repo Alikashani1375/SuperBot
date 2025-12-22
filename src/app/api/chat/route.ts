@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const { message } = await req.json();
 
     const stream = await client.chat.completions.stream({
-      model: "meta-llama/Llama-3.1-8B-Instruct:fireworks-ai",
+      model: "meta-llama/Llama-3.2-3B-Instruct:novita",
       messages: [
         { role: "system", content: "You are a helpful assistant." },
         { role: "user", content: message },
