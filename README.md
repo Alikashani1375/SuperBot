@@ -1,10 +1,9 @@
 # SuperBot Ai Assistant
 
-An AI-powered assistant designed to introduce and guide users through the company’s services.
+An AI-powered assistant.
 
 ## Features
 
-- AI responds using ** landing page data**
 - Create new chats
 - Edit existing chats
 - Rename or delete chat sessions
